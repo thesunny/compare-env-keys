@@ -17,8 +17,19 @@ export function compareEnv(...dotenvPaths: string[]) {
     )
     const otherEnvKeys = Object.keys(dotenv.parse(utils.readFile(otherEnvPath)))
     const diff = arrDiff(mainEnvKeys, otherEnvKeys)
+    const reverseDiff = arrDiff(otherEnvKeys, mainEnvKeys)
     if (diff.length === 0) {
-      utils.pass(`Pass`)
+      if (reverseDiff.length === 0) {
+        utils.pass(`Pass`)
+      } else {
+        utils.pass(
+          `Pass. But FYI found in ${utils.stringify(
+            otherEnvPath
+          )} these extra keys ${reverseDiff
+            .map((key) => utils.stringify(key))
+            .join(", ")}`
+        )
+      }
     } else {
       utils.fail(
         `${utils.stringify(otherEnvPath)} missing keys ${diff
