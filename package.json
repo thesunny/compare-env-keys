@@ -1,0 +1,67 @@
+{
+  "name": "compare-env-keys",
+  "version": "1.0.0",
+  "description": "",
+  "license": "MITH",
+  "author": "Sunny Hirai",
+  "files": [
+    ".dist/**/*"
+  ],
+  "main": ".dist/src/index.js",
+  "types": ".dist/src/index.d.ts",
+  "bin": {
+    "compare-env-keys": "./.dist/src/index.js"
+  },
+  "devDependencies": {
+    "@types/jest": "^27",
+    "@types/node": "^18.11.9",
+    "@typescript-eslint/eslint-plugin": "^5.15.0",
+    "@typescript-eslint/parser": "^5.15.0",
+    "concurrently": "^7.2",
+    "eslint": "^8.4.1",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-import-resolver-node": "^0.3",
+    "eslint-import-resolver-typescript": "^3.5",
+    "eslint-plugin-import": "^2.26",
+    "eslint-plugin-no-secrets": "^0.8",
+    "eslint-plugin-react": "^7.27",
+    "eslint-plugin-simple-import-sort": "^8.0",
+    "jest": "^27",
+    "prettier": "^2",
+    "ts-jest": "^27",
+    "ts-node": "^10.9.1",
+    "tsc": "^2.0.4",
+    "tsconfig-paths": "^4.1.0",
+    "typescript": "^4.9.3"
+  },
+  "scripts": {
+    "dev": "yarn ts src/index.ts 1.env 1a.env 2.env 3.env",
+    "-- preset": "# Run preset from @thesunny/presets",
+    "preset": "ts-node --project node_modules/@thesunny/presets/tsconfig.ts-node.json node_modules/@thesunny/presets/bin/index.ts",
+    "--- test": "#",
+    "test:once": "yarn test:clearcache && jest --config=jest.config.js",
+    "test:watch": "jest --watch --config=jest.fast.config.js",
+    "test:watch:types": "yarn test:clearcache && jest --watch --config=jest.config.js",
+    "test:clearcache": "jest --clearCache",
+    "-- fix": "# fix syntax",
+    "fix:prettier": "yarn lint:prettier --write",
+    "fix:eslint": "yarn lint:eslint --fix",
+    "-- lint": "# lint syntax",
+    "lint": "concurrently 'yarn lint:prettier' 'yarn lint:eslint' 'yarn lint:tsc'",
+    "lint:prettier": "prettier --check \"**/*.{css,md,js,jsx,json,ts,tsx}\"",
+    "lint:eslint": "eslint .",
+    "lint:tsc": "tsc --build ./ --force",
+    "--- npm": "# build npm",
+    "build:npm": "rm -rf ./.dist/ && tsc -p tsconfig.tsc.json",
+    "publish:npm": "yarn lint && yarn test:once && yarn build:npm && yarn publish || echo '\"npm publish --access=public' to publish to npm",
+    "-- ts-node": "# run with ts-node",
+    "ts": "ts-node --project tsconfig.ts-node.json",
+    "-- end": "# end"
+  },
+  "dependencies": {
+    "@thesunny/script-utils": "^0.1.51",
+    "@types/arr-diff": "^4.0.1",
+    "arr-diff": "^4.0.0",
+    "dotenv": "^16.0.3"
+  }
+}
