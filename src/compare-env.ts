@@ -1,5 +1,4 @@
 import * as utils from "@thesunny/script-utils"
-import { task } from "@thesunny/script-utils"
 import arrDiff from "arr-diff"
 import dotenv from "dotenv"
 
